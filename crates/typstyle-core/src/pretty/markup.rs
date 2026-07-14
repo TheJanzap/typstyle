@@ -201,14 +201,15 @@ impl<'a> PrettyPrinter<'a> {
         }
 
         let repr = collect_markup_repr(markup);
-        let body = if self.config.wrap_mode == WrapMode::SentencePerLine
-            && scope != MarkupScope::InlineItem
-        {
-            self.convert_markup_body_sentence_per_line(ctx, &repr)
-        } else if self.config.wrap_mode != WrapMode::None && scope != MarkupScope::InlineItem {
-            self.convert_markup_body_reflow(ctx, &repr)
-        } else {
+
+        let body = if scope == MarkupScope::InlineItem {
             self.convert_markup_body(ctx, &repr)
+        } else {
+            match self.config.wrap_mode {
+                WrapMode::SentencePerLine => self.convert_markup_body_sentence_per_line(ctx, &repr),
+                WrapMode::Fill => self.convert_markup_body_reflow(ctx, &repr),
+                WrapMode::None => self.convert_markup_body(ctx, &repr),
+            }
         };
 
         // Add line or space (if any) to both sides.
