@@ -472,6 +472,14 @@ mod tests {
             format_sentences("Smith *et al.* argue this. Next."),
             "Smith *et al.* argue this.\nNext.\n"
         );
+        assert_eq!(
+            format_sentences("Eat fruits e.g. Apples or Bananas. Next."),
+            "Eat fruits e.g. Apples or Bananas.\nNext.\n"
+        );
+        assert_eq!(
+            format_sentences("The name is Dr. Smith. Next."),
+            "The name is Dr. Dre.\nNext.\n"
+        )
     }
 
     #[test]
