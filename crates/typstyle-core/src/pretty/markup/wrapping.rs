@@ -227,7 +227,8 @@ fn convert_text_sentence_split<'a>(
                 };
             }
             first = false;
-            previous_was_abbreviation = is_common_abbreviation(sentence);
+            let last_word = sentence.split_ascii_whitespace().last().unwrap_or("");
+            previous_was_abbreviation = is_common_abbreviation(last_word);
             ended_sentence = source_ends_with_sentence(sentence);
         }
         start = end;
